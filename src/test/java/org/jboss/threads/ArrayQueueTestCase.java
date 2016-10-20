@@ -83,4 +83,21 @@ public final class ArrayQueueTestCase extends TestCase {
             }
         }
     }
+
+    public void testEmpty() {
+        final int max = 0;
+        final ArrayQueue<Object> queue = new ArrayQueue<Object>(max);
+        assertTrue(!queue.offer(new Object()));
+        try {
+            queue.add(new Object());
+            fail("It should throw java.lang.IllegalException.");
+        } catch (IllegalStateException e) {
+        }
+        assertNull("Empty queue should return null", queue.peek());
+        assertEquals(0, queue.size());
+        assertNull("Empty queue should return null", queue.poll());
+        assertTrue(queue.isEmpty());
+        // iterator
+        assertTrue(!queue.iterator().hasNext());
+    }
 }

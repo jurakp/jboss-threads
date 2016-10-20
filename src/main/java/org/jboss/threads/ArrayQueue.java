@@ -79,14 +79,14 @@ public final class ArrayQueue<E> extends AbstractQueue<E> implements Queue<E> {
     }
 
     public boolean isEmpty() {
-        return elements[tail] == null;
+        return elements.length == 0 || elements[tail] == null;
     }
 
     public int size() {
         final int head = this.head;
         final int tail = this.tail;
         final E[] elements = this.elements;
-        if (elements[tail] == null) {
+        if (elements.length == 0 || elements[tail] == null) {
             return 0;
         } else if (head > tail) {
             return head - tail;
@@ -102,7 +102,7 @@ public final class ArrayQueue<E> extends AbstractQueue<E> implements Queue<E> {
         final int head = this.head;
         final E[] elements = this.elements;
         final int len = elements.length;
-        if (elements[head] != null) {
+        if (len == 0 || elements[head] != null) {
             return false;
         } else {
             elements[head] = e;
@@ -115,7 +115,7 @@ public final class ArrayQueue<E> extends AbstractQueue<E> implements Queue<E> {
     public E poll() {
         final int tail = this.tail;
         final E[] elements = this.elements;
-        final E value = elements[tail];
+        final E value = elements.length == 0 ? null : elements[tail];
         if (value != null) {
             modCnt++;
             elements[tail] = null;
@@ -126,7 +126,7 @@ public final class ArrayQueue<E> extends AbstractQueue<E> implements Queue<E> {
 
     public E peek() {
         final int tail = this.tail;
-        return tail == -1 ? null : elements[tail];
+        return (tail == -1 || elements.length == 0) ? null : elements[tail];
     }
 
     public void clear() {
